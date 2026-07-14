@@ -11,26 +11,34 @@
             color: #e1e1e6;
             margin: 0;
             padding: 10px;
+            height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
         .header {
             text-align: center;
-            padding: 5px;
+            padding: 8px 0;
             border-bottom: 1px solid #29292e;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .header h1 {
             margin: 0;
             color: #00e676;
-            font-size: 22px;
+            font-size: 20px;
         }
         
-        /* Layout de 3 columnas solicitado */
+        /* Layout de 3 columnas ajustado para no estirarse */
         .planner-layout {
             display: grid;
-            grid-template-columns: 360px 1fr 320px;
+            grid-template-columns: 310px 1fr 300px;
             gap: 12px;
-            max-width: 1600px;
+            max-width: 1100px; /* Tamaño contenido y compacto */
+            width: 100%;
             margin: 0 auto;
+            flex-grow: 1;
+            height: calc(100vh - 70px);
+            min-height: 550px;
         }
 
         /* Paneles */
@@ -42,15 +50,17 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
         .panel h2 {
             margin-top: 0;
-            font-size: 14px;
+            font-size: 13px;
             color: #fff;
             border-bottom: 1px solid #29292e;
             padding-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
         /* --- COLUMNA IZQUIERDA: ÁRBOL DE HABILIDADES --- */
@@ -67,29 +77,43 @@
             font-size: 13px;
         }
         .skills-scroll-container {
-            height: 600px;
+            flex-grow: 1;
             overflow-y: auto;
             border: 1px solid #29292e;
             border-radius: 6px;
             background-color: #16161a;
-            padding: 5px;
+            padding: 6px;
+        }
+        /* Scrollbar prolijo */
+        .skills-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .skills-scroll-container::-webkit-scrollbar-thumb {
+            background: #29292e;
+            border-radius: 3px;
         }
         .skill-row {
             display: grid;
-            grid-template-columns: 40px repeat(3, 1fr);
-            gap: 6px;
+            grid-template-columns: 25px repeat(3, 1fr);
+            gap: 5px;
             align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid #202024;
+            padding: 4px 0;
+            border-bottom: 1px solid #1a1a1e;
         }
         .row-number {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffca28;
             text-align: center;
         }
+        .skill-slot-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .skill-slot {
-            aspect-ratio: 1;
+            width: 60px;  /* Tamaño fijo exacto de icono */
+            height: 60px; /* Tamaño fijo exacto de icono */
             background-color: #1a1a1e;
             border: 1px solid #3a3a42;
             border-radius: 4px;
@@ -98,37 +122,41 @@
             justify-content: center;
             position: relative;
             cursor: pointer;
-            font-size: 9px;
+            font-size: 8px;
             color: #7c7c8a;
             user-select: none;
             transition: all 0.1s;
+            text-align: center;
+            padding: 4px;
+            box-sizing: border-box;
+            word-break: break-word;
         }
         .skill-slot:hover {
             border-color: #00e676;
         }
         .skill-slot.active {
-            border: 2px solid #00e676;
+            border: 1px solid #00e676;
             background-color: #202024;
             color: #fff;
         }
         .skill-points {
             position: absolute;
-            bottom: 2px;
-            right: 2px;
-            background-color: rgba(0,0,0,0.8);
+            bottom: 1px;
+            right: 1px;
+            background-color: rgba(0,0,0,0.85);
             border: 1px solid #00e676;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: bold;
             color: #00e676;
         }
 
-        /* --- COLUMNA CENTRAL: EQUIPAMIENTO Y STATS RÁPIDOS --- */
+        /* --- COLUMNA CENTRAL: EQUIPAMIENTO COMPACTO --- */
         .equipment-container {
             display: flex;
             flex-direction: column;
@@ -138,40 +166,39 @@
         }
         .equipment-layout-wrapper {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             align-items: center;
             justify-content: center;
-            margin: 20px 0;
-            position: relative;
+            margin: auto 0;
         }
         .equip-column {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
         .char-silhouette {
-            width: 150px;
-            height: 250px;
+            width: 120px;
+            height: 220px;
             border: 1px dashed #29292e;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #41414c;
-            font-size: 12px;
+            font-size: 11px;
             background-color: #16161a;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         .slot {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             background-color: #1a1a1e;
             border: 1px dashed #3a3a42;
-            border-radius: 6px;
+            border-radius: 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            font-size: 8px;
             color: #7c7c8a;
             cursor: pointer;
             transition: all 0.2s;
@@ -193,13 +220,13 @@
             background-color: #16161a;
             border: 1px solid #29292e;
             border-radius: 6px;
-            padding: 10px;
-            margin-top: auto;
+            padding: 8px;
+            box-sizing: border-box;
         }
         .quick-stat-row {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
+            font-size: 12px;
             padding: 4px 0;
             border-bottom: 1px solid #202024;
         }
@@ -211,16 +238,23 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            height: 600px;
             overflow-y: auto;
+            flex-grow: 1;
+        }
+        .detailed-stats::-webkit-scrollbar {
+            width: 6px;
+        }
+        .detailed-stats::-webkit-scrollbar-thumb {
+            background: #29292e;
+            border-radius: 3px;
         }
         .stat-group {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
         .stat-group h3 {
-            font-size: 12px;
+            font-size: 11px;
             color: #ffca28;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             text-transform: uppercase;
             border-bottom: 1px solid #202024;
             padding-bottom: 2px;
@@ -228,8 +262,8 @@
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
-            font-size: 12px;
+            padding: 3px 0;
+            font-size: 11px;
         }
         .stat-val {
             color: #00e676;
@@ -246,10 +280,10 @@
             background-color: #121214;
             border: 1px solid #00e676;
             border-radius: 8px;
-            padding: 20px;
+            padding: 15px;
             z-index: 1000;
-            width: 400px;
-            max-height: 500px;
+            width: 350px;
+            max-height: 400px;
             overflow-y: auto;
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
@@ -257,26 +291,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-bottom: 1px solid #29292e;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+        }
+        .modal-title {
+            font-size: 14px;
+            margin: 0;
+            color: #fff;
         }
         .modal-close {
             cursor: pointer;
             color: #ff3333;
             font-weight: bold;
+            font-size: 14px;
         }
         .modal-item-btn {
             display: block;
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             background-color: #1a1a1e;
             color: white;
             border: 1px solid #29292e;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-align: left;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 12px;
         }
         .modal-item-btn:hover {
             border-color: #ffca28;
@@ -383,7 +424,7 @@
     <div class="overlay" id="overlay" onclick="cerrarSelector()"></div>
     <div class="modal" id="modal">
         <div class="modal-header">
-            <h3 id="modal-title">Seleccionar Item</h3>
+            <h3 class="modal-title" id="modal-title">Seleccionar Item</h3>
             <span class="modal-close" onclick="cerrarSelector()">X</span>
         </div>
         <div id="modal-list"></div>
@@ -398,7 +439,6 @@
             shield: null, gloves: null, boots: null, ring1: null
         };
 
-        // Estructura de coordenadas exactas según las imágenes
         const skillTrees = {
             ninja: [
                 { row: 1, col: 1, max: 1, name: "Ataque Base", current: 0 },
@@ -483,11 +523,9 @@
         function cambiarClase() {
             const clase = document.getElementById('class-select').value;
             
-            // Actualizar silueta del medio
             const siluetas = { ninja: "👤 Ninja", guerrero: "🧟 Guerrero Zombie", mago: "🧙 Mago Oscuro" };
             document.getElementById('char-image').innerText = siluetas[clase];
 
-            // Cargar el árbol correspondiente clonando los datos base
             currentTree = JSON.parse(JSON.stringify(skillTrees[clase]));
             dibujarArbol();
             calcularStats();
@@ -497,20 +535,20 @@
             const container = document.getElementById('skills-container');
             container.innerHTML = '';
 
-            // Generamos las 10 filas
             for (let f = 1; f <= 10; f++) {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'skill-row';
 
-                // Número de fila
                 const numSpan = document.createElement('div');
                 numSpan.className = 'row-number';
                 numSpan.innerText = f;
                 rowDiv.appendChild(numSpan);
 
-                // 3 Columnas
                 for (let c = 1; c <= 3; c++) {
                     const skill = currentTree.find(s => s.row === f && s.col === c);
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'skill-slot-wrapper';
+
                     const slot = document.createElement('div');
                     slot.className = 'skill-slot';
 
@@ -518,13 +556,11 @@
                         slot.innerText = skill.name;
                         if (skill.current > 0) slot.classList.add('active');
                         
-                        // Burbuja de puntos
                         const pts = document.createElement('div');
                         pts.className = 'skill-points';
                         pts.innerText = `${skill.current}/${skill.max}`;
                         slot.appendChild(pts);
 
-                        // Click izquierdo suma, click derecho resta
                         slot.addEventListener('click', (e) => {
                             if (skill.current < skill.max) {
                                 skill.current++;
@@ -543,10 +579,13 @@
                             }
                         });
                     } else {
-                        slot.style.border = '1px solid #1a1a1e';
+                        slot.style.border = '1px solid transparent';
+                        slot.style.backgroundColor = 'transparent';
                         slot.style.cursor = 'default';
+                        slot.innerText = '';
                     }
-                    rowDiv.appendChild(slot);
+                    wrapper.appendChild(slot);
+                    rowDiv.appendChild(wrapper);
                 }
                 container.appendChild(rowDiv);
             }
@@ -605,7 +644,6 @@
         }
 
         function calcularStats() {
-            // Stats base
             let stats = {
                 life: 100, mana: 50, speed: 100,
                 cold: 0, fire: 0, light: 0,
@@ -615,9 +653,8 @@
                 crit: 5, critPower: 150
             };
 
-            // 1. Modificadores por Equipamiento
             Object.keys(equipado).forEach(slot => {
-                const item = equipado[slot];
+                const item = équipé = equipado[slot];
                 if (item) {
                     if (slot === 'weapon') { stats.ataque += 35; stats.crit += 10; }
                     if (slot === 'shield') { stats.defensa += 25; stats.block += 15; }
@@ -630,10 +667,8 @@
                 }
             });
 
-            // 2. Modificadores por Habilidades del Árbol (Ejemplo de simulación interactiva)
             currentTree.forEach(skill => {
                 if (skill.current > 0) {
-                    // Cada punto asignado suma beneficios según el tipo de habilidad
                     if (skill.name.includes("Ataque") || skill.name.includes("Tajo")) {
                         stats.ataque += skill.current * 5;
                     } else if (skill.name.includes("Escudo") || skill.name.includes("Muro")) {
@@ -648,14 +683,12 @@
                 }
             });
 
-            // Actualizar interfaz columna central (Stats rápidos)
             document.getElementById('q-dmg').innerText = stats.ataque;
             document.getElementById('q-crit').innerText = stats.crit + "%";
             document.getElementById('q-crit-power').innerText = stats.critPower + "%";
             document.getElementById('q-def').innerText = stats.defensa;
             document.getElementById('q-mdef').innerText = stats.defensaMagica;
 
-            // Actualizar interfaz columna derecha (Stats detallados)
             document.getElementById('d-life').innerText = stats.life;
             document.getElementById('d-mana').innerText = stats.mana;
             document.getElementById('d-speed').innerText = stats.speed + "%";
