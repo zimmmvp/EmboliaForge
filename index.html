@@ -28,12 +28,12 @@
             font-size: 20px;
         }
         
-        /* Layout de 3 columnas ajustado para no estirarse */
+        /* Layout de 3 columnas ajustado para pantallas HD */
         .planner-layout {
             display: grid;
             grid-template-columns: 310px 1fr 300px;
             gap: 12px;
-            max-width: 1200px; /* Un poquito más ancho para dar espacio al nuevo inventario */
+            max-width: 1300px; /* Un poco más de margen para el equipamiento masivo */
             width: 100%;
             margin: 0 auto;
             flex-grow: 1;
@@ -84,7 +84,6 @@
             background-color: #16161a;
             padding: 6px;
         }
-        /* Scrollbar prolijo */
         .skills-scroll-container::-webkit-scrollbar {
             width: 6px;
         }
@@ -112,8 +111,8 @@
             align-items: center;
         }
         .skill-slot {
-            width: 60px;  /* Tamaño fijo exacto de icono */
-            height: 60px; /* Tamaño fijo exacto de icono */
+            width: 60px;
+            height: 60px;
             background-color: #1a1a1e;
             border: 1px solid #3a3a42;
             border-radius: 4px;
@@ -156,7 +155,7 @@
             color: #00e676;
         }
 
-        /* --- COLUMNA CENTRAL: EQUIPAMIENTO AGRANDADO Y PROPORCIONAL --- */
+        /* --- COLUMNA CENTRAL: EQUIPAMIENTO MASIVO --- */
         .equipment-container {
             display: flex;
             flex-direction: column;
@@ -166,7 +165,7 @@
         }
         .equipment-layout-wrapper {
             display: flex;
-            gap: 24px; /* Más espacio entre columnas */
+            gap: 32px; /* Mayor separación horizontal */
             align-items: center;
             justify-content: center;
             margin: auto 0;
@@ -174,40 +173,40 @@
         .equip-column {
             display: flex;
             flex-direction: column;
-            gap: 12px; /* Más espacio vertical entre ranuras */
+            gap: 16px; /* Más espacio vertical entre ranuras gigantes */
         }
         .char-silhouette {
-            width: 170px; /* Más ancho */
-            height: 300px; /* Más alto para ocupar espacio vertical */
+            width: 210px; /* Silueta más ancha */
+            height: 380px; /* Silueta mucho más alta */
             border: 1px dashed #3a3a42;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #7c7c8a;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: bold;
             background-color: #16161a;
             border-radius: 8px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
         }
         .slot {
-            width: 76px; /* Más grande */
-            height: 76px; /* Más grande */
+            width: 96px; /* Ranuras gigantes */
+            height: 96px; /* Ranuras gigantes */
             background-color: #1a1a1e;
             border: 1px dashed #3a3a42;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 11px; /* Letra más legible */
+            font-size: 13px; /* Letra un poco más grande */
             color: #a8a8b3;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
-            padding: 4px;
+            padding: 6px;
             box-sizing: border-box;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
         .slot:hover {
             border-color: #00e676;
@@ -215,7 +214,7 @@
             color: #fff;
         }
         .slot-active {
-            border: 1.5px solid #ffca28;
+            border: 2px solid #ffca28;
             background-color: #202024;
             color: #fff;
             font-weight: 600;
