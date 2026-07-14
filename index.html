@@ -28,12 +28,12 @@
             font-size: 20px;
         }
         
-        /* Layout de 3 columnas ajustado para pantallas HD */
+        /* Layout de 3 columnas - Columna de habilidades ensanchada a 390px */
         .planner-layout {
             display: grid;
-            grid-template-columns: 310px 1fr 300px;
+            grid-template-columns: 390px 1fr 300px;
             gap: 12px;
-            max-width: 1300px; /* Un poco más de margen para el equipamiento masivo */
+            max-width: 1380px; /* Un toque más de ancho total para albergar el panel izquierdo más ancho */
             width: 100%;
             margin: 0 auto;
             flex-grow: 1;
@@ -63,7 +63,7 @@
             margin-bottom: 10px;
         }
 
-        /* --- COLUMNA IZQUIERDA: ÁRBOL DE HABILIDADES --- */
+        /* --- COLUMNA IZQUIERDA: ÁRBOL DE HABILIDADES ANCHO --- */
         .class-selector {
             margin-bottom: 10px;
         }
@@ -82,7 +82,7 @@
             border: 1px solid #29292e;
             border-radius: 6px;
             background-color: #16161a;
-            padding: 6px;
+            padding: 8px;
         }
         .skills-scroll-container::-webkit-scrollbar {
             width: 6px;
@@ -93,14 +93,14 @@
         }
         .skill-row {
             display: grid;
-            grid-template-columns: 25px repeat(3, 1fr);
-            gap: 5px;
+            grid-template-columns: 30px repeat(3, 1fr);
+            gap: 8px;
             align-items: center;
-            padding: 4px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #1a1a1e;
         }
         .row-number {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: #ffca28;
             text-align: center;
@@ -111,8 +111,8 @@
             align-items: center;
         }
         .skill-slot {
-            width: 60px;
-            height: 60px;
+            width: 75px;  /* Habilidades más grandes y anchas */
+            height: 75px; /* Habilidades más grandes y anchas */
             background-color: #1a1a1e;
             border: 1px solid #3a3a42;
             border-radius: 4px;
@@ -121,14 +121,15 @@
             justify-content: center;
             position: relative;
             cursor: pointer;
-            font-size: 8px;
+            font-size: 10px; /* Letra más grande y legible */
             color: #7c7c8a;
             user-select: none;
             transition: all 0.1s;
             text-align: center;
-            padding: 4px;
+            padding: 6px;
             box-sizing: border-box;
             word-break: break-word;
+            line-height: 1.2;
         }
         .skill-slot:hover {
             border-color: #00e676;
@@ -140,17 +141,17 @@
         }
         .skill-points {
             position: absolute;
-            bottom: 1px;
-            right: 1px;
+            bottom: 2px;
+            right: 2px;
             background-color: rgba(0,0,0,0.85);
             border: 1px solid #00e676;
             border-radius: 50%;
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: bold;
             color: #00e676;
         }
@@ -165,7 +166,7 @@
         }
         .equipment-layout-wrapper {
             display: flex;
-            gap: 32px; /* Mayor separación horizontal */
+            gap: 32px;
             align-items: center;
             justify-content: center;
             margin: auto 0;
@@ -173,11 +174,11 @@
         .equip-column {
             display: flex;
             flex-direction: column;
-            gap: 16px; /* Más espacio vertical entre ranuras gigantes */
+            gap: 16px;
         }
         .char-silhouette {
-            width: 210px; /* Silueta más ancha */
-            height: 380px; /* Silueta mucho más alta */
+            width: 210px;
+            height: 380px;
             border: 1px dashed #3a3a42;
             display: flex;
             align-items: center;
@@ -190,8 +191,8 @@
             box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
         }
         .slot {
-            width: 96px; /* Ranuras gigantes */
-            height: 96px; /* Ranuras gigantes */
+            width: 96px;
+            height: 96px;
             background-color: #1a1a1e;
             border: 1px dashed #3a3a42;
             border-radius: 8px;
@@ -199,7 +200,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 13px; /* Letra un poco más grande */
+            font-size: 13px;
             color: #a8a8b3;
             cursor: pointer;
             transition: all 0.2s;
