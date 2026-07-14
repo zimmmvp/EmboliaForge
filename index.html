@@ -14,21 +14,21 @@
         }
         .header {
             text-align: center;
-            padding: 10px;
+            padding: 5px;
             border-bottom: 1px solid #29292e;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .header h1 {
             margin: 0;
             color: #00e676;
-            font-size: 24px;
+            font-size: 22px;
         }
         
-        /* Contenedor principal de tres columnas estilo Maxroll */
+        /* Layout de 3 columnas solicitado */
         .planner-layout {
             display: grid;
-            grid-template-columns: 320px 1fr 300px;
-            gap: 15px;
+            grid-template-columns: 360px 1fr 320px;
+            gap: 12px;
             max-width: 1600px;
             margin: 0 auto;
         }
@@ -38,105 +38,205 @@
             background-color: #121214;
             border: 1px solid #29292e;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
         .panel h2 {
             margin-top: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: #fff;
             border-bottom: 1px solid #29292e;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* 1. SECCIÓN EQUIPAMIENTO (Izquierda) */
-        .equipment-grid {
+        /* --- COLUMNA IZQUIERDA: ÁRBOL DE HABILIDADES --- */
+        .class-selector {
+            margin-bottom: 10px;
+        }
+        .class-selector select {
+            width: 100%;
+            padding: 8px;
+            background-color: #202024;
+            color: white;
+            border: 1px solid #29292e;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .skills-scroll-container {
+            height: 600px;
+            overflow-y: auto;
+            border: 1px solid #29292e;
+            border-radius: 6px;
+            background-color: #16161a;
+            padding: 5px;
+        }
+        .skill-row {
             display: grid;
-            grid-template-areas: 
-                "head head"
-                "neck shoulders"
-                "chest shield"
-                "gloves boots"
-                "ring1 ring2";
-            gap: 10px;
+            grid-template-columns: 40px repeat(3, 1fr);
+            gap: 6px;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #202024;
+        }
+        .row-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffca28;
+            text-align: center;
+        }
+        .skill-slot {
+            aspect-ratio: 1;
+            background-color: #1a1a1e;
+            border: 1px solid #3a3a42;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            position: relative;
+            cursor: pointer;
+            font-size: 9px;
+            color: #7c7c8a;
+            user-select: none;
+            transition: all 0.1s;
+        }
+        .skill-slot:hover {
+            border-color: #00e676;
+        }
+        .skill-slot.active {
+            border: 2px solid #00e676;
+            background-color: #202024;
+            color: #fff;
+        }
+        .skill-points {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background-color: rgba(0,0,0,0.8);
+            border: 1px solid #00e676;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+            color: #00e676;
+        }
+
+        /* --- COLUMNA CENTRAL: EQUIPAMIENTO Y STATS RÁPIDOS --- */
+        .equipment-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .equipment-layout-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        .equip-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .char-silhouette {
+            width: 150px;
+            height: 250px;
+            border: 1px dashed #29292e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #41414c;
+            font-size: 12px;
+            background-color: #16161a;
+            border-radius: 8px;
         }
         .slot {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
             background-color: #1a1a1e;
-            border: 2px dashed #3a3a42;
+            border: 1px dashed #3a3a42;
             border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             color: #7c7c8a;
             cursor: pointer;
-            position: relative;
             transition: all 0.2s;
+            text-align: center;
+            padding: 2px;
+            box-sizing: border-box;
         }
         .slot:hover {
             border-color: #00e676;
             background-color: #202024;
         }
         .slot-active {
-            border: 2px solid #ffca28;
+            border: 1px solid #ffca28;
             background-color: #202024;
             color: #fff;
         }
-        /* Asignar áreas */
-        #slot-helmet { grid-area: head; width: 100%; height: 80px; }
-        #slot-necklace { grid-area: neck; }
-        #slot-weapon { grid-area: shoulders; } /* Arma principal */
-        #slot-chest { grid-area: chest; }
-        #slot-shield { grid-area: shield; }
-        #slot-gloves { grid-area: gloves; }
-        #slot-boots { grid-area: boots; }
-        #slot-ring1 { grid-area: ring1; }
-        #slot-ring2 { grid-area: ring2; }
-
-        /* 2. SECCIÓN CENTRAL (Habilidades / Árbol) */
-        .class-selector {
-            margin-bottom: 15px;
-        }
-        .class-selector select {
+        .quick-stats {
             width: 100%;
+            background-color: #16161a;
+            border: 1px solid #29292e;
+            border-radius: 6px;
             padding: 10px;
-            background-color: #202024;
-            color: white;
-            border: 1px solid #29292e;
-            border-radius: 6px;
-            font-size: 14px;
+            margin-top: auto;
         }
-        .skill-tree-area {
-            background-color: #1a1a1e;
-            border: 1px solid #29292e;
-            border-radius: 6px;
-            height: 450px;
+        .quick-stat-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7c7c8a;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid #202024;
         }
+        .quick-stat-row:last-child { border: none; }
+        .quick-stat-val { font-weight: bold; }
 
-        /* 3. SECCIÓN DERECHA (Estadísticas y Cálculos) */
+        /* --- COLUMNA DERECHA: ESTADÍSTICAS --- */
+        .detailed-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 600px;
+            overflow-y: auto;
+        }
+        .stat-group {
+            margin-bottom: 10px;
+        }
+        .stat-group h3 {
+            font-size: 12px;
+            color: #ffca28;
+            margin: 0 0 6px 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid #202024;
+            padding-bottom: 2px;
+        }
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #1a1a1e;
-            font-size: 13px;
+            padding: 4px 0;
+            font-size: 12px;
         }
         .stat-val {
             color: #00e676;
             font-weight: bold;
         }
 
-        /* Modal para elegir ítems */
+        /* MODAL DE SELECCIÓN DE ITEMS */
         .modal {
             display: none;
             position: fixed;
@@ -194,102 +294,165 @@
 <body>
 
     <div class="header">
-        <h1>🛠️ Embolia Planner 🛠️</h1>
+        <h1>⚔️ Battle For Embolia Build Planner 🛡️</h1>
     </div>
 
     <div class="planner-layout">
         
-        <!-- COLUMNA 1: EQUIPAMIENTO -->
+        <!-- COLUMNA 1: HABILIDADES (Izquierda) -->
         <div class="panel">
-            <h2>Equipamiento</h2>
-            <div class="equipment-grid">
-                <div class="slot" id="slot-helmet" onclick="abrirSelector('helmet')">🎩 Casco</div>
-                <div class="slot" id="slot-necklace" onclick="abrirSelector('necklace')">📿 Collar</div>
-                <div class="slot" id="slot-weapon" onclick="abrirSelector('weapon')">⚔️ Arma</div>
-                <div class="slot" id="slot-chest" onclick="abrirSelector('chest')">🛡️ Armadura</div>
-                <div class="slot" id="slot-shield" onclick="abrirSelector('shield')">🛡️ Escudo</div>
-                <div class="slot" id="slot-gloves" onclick="abrirSelector('gloves')">🧤 Guantes</div>
-                <div class="slot" id="slot-boots" onclick="abrirSelector('boots')">🥾 Botas</div>
-                <div class="slot" id="slot-ring1" onclick="abrirSelector('ring1')">💍 Anillo 1</div>
-                <div class="slot" id="slot-ring2" onclick="abrirSelector('ring2')">💍 Anillo 2</div>
-            </div>
-        </div>
-
-        <!-- COLUMNA 2: ÁRBOL DE HABILIDADES -->
-        <div class="panel">
-            <h2>Árbol de Habilidades</h2>
+            <h2>Habilidades</h2>
             <div class="class-selector">
-                <label for="class-select">Selecciona tu Clase:</label>
                 <select id="class-select" onchange="cambiarClase()">
-                    <option value="ciruja">Ciruja</option>
-                    <option value="mago">Mago</option>
-                    <option value="mutante">Mutante</option>
+                    <option value="ninja">Ninja</option>
+                    <option value="guerrero">Guerrero Zombie</option>
+                    <option value="mago">Mago Oscuro</option>
                 </select>
             </div>
-            <!-- El árbol cambiará dinámicamente aquí -->
-            <div id="skill-tree" class="skill-tree-area">
-                Selecciona una clase para ver sus habilidades
+            <div id="skills-container" class="skills-scroll-container">
+                <!-- Se dibuja por Javascript -->
             </div>
         </div>
 
-        <!-- COLUMNA 3: ESTADÍSTICAS (CALCULATIONS) -->
+        <!-- COLUMNA 2: EQUIPAMIENTO (Centro) -->
         <div class="panel">
-            <h2>Estadísticas Totales</h2>
-            <div id="stats-summary">
-                <div class="stat-row"><span>Vida Máxima:</span> <span class="stat-val" id="val-life">100</span></div>
-                <div class="stat-row"><span>Maná Máximo:</span> <span class="stat-val" id="val-mana">50</span></div>
-                <div class="stat-row"><span>Defensa Física:</span> <span class="stat-val" id="val-defensa">0</span></div>
-                <div class="stat-row"><span>Ataque Físico:</span> <span class="stat-val" id="val-ataque">10</span></div>
-                <div class="stat-row"><span>Ataque Mágico:</span> <span class="stat-val" id="val-ataqueMagico">0</span></div>
-                <div class="stat-row"><span>Velocidad de Movimiento:</span> <span class="stat-val" id="val-speed">100%</span></div>
+            <h2>Equipamiento</h2>
+            <div class="equipment-container">
+                <div class="equipment-layout-wrapper">
+                    <!-- Columna Izquierda de Items -->
+                    <div class="equip-column">
+                        <div class="slot" id="slot-helmet" onclick="abrirSelector('helmet')">🎩 Casco</div>
+                        <div class="slot" id="slot-chest" onclick="abrirSelector('chest')">🛡️ Pechera</div>
+                        <div class="slot" id="slot-gloves" onclick="abrirSelector('gloves')">🧤 Guantes</div>
+                        <div class="slot" id="slot-weapon" onclick="abrirSelector('weapon')">⚔️ Arma Izq</div>
+                    </div>
+
+                    <!-- Silueta del personaje -->
+                    <div class="char-silhouette" id="char-image">
+                        Ninja
+                    </div>
+
+                    <!-- Columna Derecha de Items -->
+                    <div class="equip-column">
+                        <div class="slot" id="slot-necklace" onclick="abrirSelector('necklace')">📿 Collar</div>
+                        <div class="slot" id="slot-ring1" onclick="abrirSelector('ring1')">💍 Anillo 1</div>
+                        <div class="slot" id="slot-boots" onclick="abrirSelector('boots')">🥾 Botas</div>
+                        <div class="slot" id="slot-shield" onclick="abrirSelector('shield')">🛡️ Arma Der</div>
+                    </div>
+                </div>
+
+                <!-- Stats rápidos debajo -->
+                <div class="quick-stats">
+                    <div class="quick-stat-row"><span>Daño Total:</span> <span class="quick-stat-val" id="q-dmg" style="color: #ffb300;">10</span></div>
+                    <div class="quick-stat-row"><span>Crítico:</span> <span class="quick-stat-val" id="q-crit" style="color: #e53935;">5%</span></div>
+                    <div class="quick-stat-row"><span>Poder Crítico:</span> <span class="quick-stat-val" id="q-crit-power" style="color: #ff5252;">150%</span></div>
+                    <div class="quick-stat-row"><span>Defensa:</span> <span class="quick-stat-val" id="q-def" style="color: #1e88e5;">0</span></div>
+                    <div class="quick-stat-row"><span>Defensa Mágica:</span> <span class="quick-stat-val" id="q-mdef" style="color: #8257e5;">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA 3: ESTADÍSTICAS DETALLADAS (Derecha) -->
+        <div class="panel">
+            <h2>Estadísticas Detalladas</h2>
+            <div class="detailed-stats">
+                <div class="stat-group">
+                    <h3>Generales</h3>
+                    <div class="stat-row"><span>Vida Máxima:</span> <span class="stat-val" id="d-life">100</span></div>
+                    <div class="stat-row"><span>Maná Máximo:</span> <span class="stat-val" id="d-mana">50</span></div>
+                    <div class="stat-row"><span>Velocidad de Movimiento:</span> <span class="stat-val" id="d-speed">100%</span></div>
+                </div>
+                <div class="stat-group">
+                    <h3>Resistencias</h3>
+                    <div class="stat-row"><span>Resistencia al Frío:</span> <span class="stat-val" id="d-cold">0%</span></div>
+                    <div class="stat-row"><span>Resistencia al Fuego:</span> <span class="stat-val" id="d-fire">0%</span></div>
+                    <div class="stat-row"><span>Resistencia a Rayos:</span> <span class="stat-val" id="d-light">0%</span></div>
+                </div>
+                <div class="stat-group">
+                    <h3>Habilidades Especiales</h3>
+                    <div class="stat-row"><span>Chance Bloqueo:</span> <span class="stat-val" id="d-block">0%</span></div>
+                    <div class="stat-row"><span>Evasión:</span> <span class="stat-val" id="d-evasion">0%</span></div>
+                    <div class="stat-row"><span>Hallazgo Mágico:</span> <span class="stat-val" id="d-mf">0%</span></div>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- MODAL DE SELECCIÓN DE ITEMS -->
+    <!-- MODAL SELECTOR DE ITEMS -->
     <div class="overlay" id="overlay" onclick="cerrarSelector()"></div>
     <div class="modal" id="modal">
         <div class="modal-header">
             <h3 id="modal-title">Seleccionar Item</h3>
             <span class="modal-close" onclick="cerrarSelector()">X</span>
         </div>
-        <div id="modal-list">
-            <!-- Los ítems correspondientes a la ranura se cargarán acá -->
-        </div>
+        <div id="modal-list"></div>
     </div>
 
     <script>
         let itemsDatabase = [];
-        let statsDatabase = {};
         let slotActual = null;
 
-        // Equipamiento actualmente equipado
         let equipado = {
-            helmet: null,
-            necklace: null,
-            weapon: null,
-            chest: null,
-            shield: null,
-            gloves: null,
-            boots: null,
-            ring1: null,
-            ring2: null
+            helmet: null, necklace: null, weapon: null, chest: null,
+            shield: null, gloves: null, boots: null, ring1: null
         };
 
-        // Stats base iniciales del personaje
-        const statsBase = {
-            life: 100,
-            mana: 50,
-            defensa: 0,
-            ataque: 10,
-            ataqueMagico: 0,
-            speed: 100
+        // Estructura de coordenadas exactas según las imágenes
+        const skillTrees = {
+            ninja: [
+                { row: 1, col: 1, max: 1, name: "Ataque Base", current: 0 },
+                { row: 1, col: 3, max: 5, name: "Visión Aguda", current: 0 },
+                { row: 2, col: 1, max: 5, name: "Corte Rápido", current: 0 },
+                { row: 2, col: 3, max: 5, name: "Doble Empuñadura", current: 0 },
+                { row: 3, col: 1, max: 5, name: "Veneno Ninja", current: 0 },
+                { row: 4, col: 1, max: 5, name: "Ataque Sombrío", current: 0 },
+                { row: 4, col: 3, max: 7, name: "Sigilo", current: 0 },
+                { row: 5, col: 1, max: 5, name: "Torbellino", current: 0 },
+                { row: 6, col: 1, max: 5, name: "Corte Sangriento", current: 0 },
+                { row: 6, col: 3, max: 5, name: "Clon de Sombra", current: 0 },
+                { row: 7, col: 2, max: 5, name: "Tercer Ojo", current: 0 },
+                { row: 8, col: 3, max: 5, name: "Candado Verde", current: 0 },
+                { row: 9, col: 3, max: 5, name: "Gota de Alma", current: 0 },
+                { row: 10, col: 1, max: 5, name: "Tormenta de Rayos", current: 0 },
+                { row: 10, col: 2, max: 5, name: "Foco Oculto", current: 0 },
+                { row: 10, col: 3, max: 5, name: "Sobrecarga", current: 0 }
+            ],
+            guerrero: [
+                { row: 1, col: 1, max: 5, name: "Tajo Verde", current: 0 },
+                { row: 1, col: 2, max: 5, name: "Grito Bestial", current: 0 },
+                { row: 1, col: 3, max: 5, name: "Carrera Fantasma", current: 0 },
+                { row: 2, col: 1, max: 5, name: "Corte Creciente", current: 0 },
+                { row: 3, col: 3, max: 5, name: "Muro Sangriento", current: 0 },
+                { row: 4, col: 1, max: 5, name: "Tajo Calavera", current: 0 },
+                { row: 5, col: 3, max: 5, name: "Mirada del Muerto", current: 0 },
+                { row: 6, col: 2, max: 5, name: "Sanación Corazón", current: 0 },
+                { row: 7, col: 3, max: 5, name: "Poder de Necrosis", current: 0 },
+                { row: 8, col: 2, max: 5, name: "Escudo de Almas", current: 0 },
+                { row: 9, col: 1, max: 5, name: "Frenesí Verde", current: 0 },
+                { row: 9, col: 3, max: 5, name: "Mazo Destructor", current: 0 },
+                { row: 10, col: 1, max: 5, name: "Corte Final", current: 0 }
+            ],
+            mago: [
+                { row: 1, col: 1, max: 5, name: "Calavera de Fuego", current: 0 },
+                { row: 1, col: 3, max: 5, name: "Invocación Oscura", current: 0 },
+                { row: 2, col: 2, max: 5, name: "Puño Ígneo", current: 0 },
+                { row: 3, col: 1, max: 5, name: "Tentáculos de Vacío", current: 0 },
+                { row: 4, col: 3, max: 5, name: "Orbe Mágico", current: 0 },
+                { row: 5, col: 1, max: 5, name: "Rostro Espectral", current: 0 },
+                { row: 6, col: 2, max: 5, name: "Alma de la Muerte", current: 0 },
+                { row: 7, col: 3, max: 5, name: "Ojo de la Perdición", current: 0 },
+                { row: 8, col: 1, max: 5, name: "Escudo de Vacío", current: 0 },
+                { row: 9, col: 2, max: 5, name: "Foco de Maná", current: 0 },
+                { row: 10, col: 1, max: 5, name: "Vórtice Oscuro", current: 0 },
+                { row: 10, col: 3, max: 5, name: "Sintonía de Sangre", current: 0 }
+            ]
         };
+
+        let currentTree = [];
 
         async function inicializar() {
             try {
-                // Cargamos items
                 const resItems = await fetch('item.txt');
                 const textItems = await resItems.text();
                 textItems.split('\n').forEach(linea => {
@@ -297,7 +460,6 @@
                         const id = linea.split('item_name_')[1].split('=>')[0].trim();
                         const nombre = linea.split('=>')[1].trim();
                         
-                        // Detectar tipo de ítem según el nombre para filtrarlo en la ranura correcta
                         let tipo = 'otros';
                         if (nombre.toLowerCase().includes('casco') || nombre.toLowerCase().includes('corona')) tipo = 'helmet';
                         else if (nombre.toLowerCase().includes('collar')) tipo = 'necklace';
@@ -313,30 +475,98 @@
                 });
                 
                 cambiarClase();
-                calcularStats();
             } catch (e) {
-                console.error("Error al inicializar el planificador:", e);
+                console.error("Error cargando base de datos:", e);
             }
         }
 
-        // Abre la lista de ítems para la ranura seleccionada
+        function cambiarClase() {
+            const clase = document.getElementById('class-select').value;
+            
+            // Actualizar silueta del medio
+            const siluetas = { ninja: "👤 Ninja", guerrero: "🧟 Guerrero Zombie", mago: "🧙 Mago Oscuro" };
+            document.getElementById('char-image').innerText = siluetas[clase];
+
+            // Cargar el árbol correspondiente clonando los datos base
+            currentTree = JSON.parse(JSON.stringify(skillTrees[clase]));
+            dibujarArbol();
+            calcularStats();
+        }
+
+        function dibujarArbol() {
+            const container = document.getElementById('skills-container');
+            container.innerHTML = '';
+
+            // Generamos las 10 filas
+            for (let f = 1; f <= 10; f++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'skill-row';
+
+                // Número de fila
+                const numSpan = document.createElement('div');
+                numSpan.className = 'row-number';
+                numSpan.innerText = f;
+                rowDiv.appendChild(numSpan);
+
+                // 3 Columnas
+                for (let c = 1; c <= 3; c++) {
+                    const skill = currentTree.find(s => s.row === f && s.col === c);
+                    const slot = document.createElement('div');
+                    slot.className = 'skill-slot';
+
+                    if (skill) {
+                        slot.innerText = skill.name;
+                        if (skill.current > 0) slot.classList.add('active');
+                        
+                        // Burbuja de puntos
+                        const pts = document.createElement('div');
+                        pts.className = 'skill-points';
+                        pts.innerText = `${skill.current}/${skill.max}`;
+                        slot.appendChild(pts);
+
+                        // Click izquierdo suma, click derecho resta
+                        slot.addEventListener('click', (e) => {
+                            if (skill.current < skill.max) {
+                                skill.current++;
+                                pts.innerText = `${skill.current}/${skill.max}`;
+                                if (skill.current > 0) slot.classList.add('active');
+                                calcularStats();
+                            }
+                        });
+                        slot.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            if (skill.current > 0) {
+                                skill.current--;
+                                pts.innerText = `${skill.current}/${skill.max}`;
+                                if (skill.current === 0) slot.classList.remove('active');
+                                calcularStats();
+                            }
+                        });
+                    } else {
+                        slot.style.border = '1px solid #1a1a1e';
+                        slot.style.cursor = 'default';
+                    }
+                    rowDiv.appendChild(slot);
+                }
+                container.appendChild(rowDiv);
+            }
+        }
+
         function abrirSelector(slot) {
             slotActual = slot;
             document.getElementById('modal-title').innerText = `Equipar en ${slot.toUpperCase()}`;
             const listContainer = document.getElementById('modal-list');
             listContainer.innerHTML = '';
 
-            // Filtrar ítems de la DB que sirvan para este slot
             let tipoFiltro = slot;
-            if (slot === 'ring1' || slot === 'ring2') tipoFiltro = 'ring';
+            if (slot === 'ring1') tipoFiltro = 'ring';
 
             const itemsFiltrados = itemsDatabase.filter(i => i.tipo === tipoFiltro);
 
-            // Opción de desequipar
             const desequiparBtn = document.createElement('button');
             desequiparBtn.className = 'modal-item-btn';
             desequiparBtn.style.color = '#ff3333';
-            desequiparBtn.innerText = '❌ Desequipar slot';
+            desequiparBtn.innerText = '❌ Desequipar';
             desequiparBtn.onclick = () => equiparItem(null);
             listContainer.appendChild(desequiparBtn);
 
@@ -365,8 +595,7 @@
                 slotEl.innerText = item.nombre;
                 slotEl.classList.add('slot-active');
             } else {
-                // Resetear texto por defecto
-                const iconos = { helmet: "🎩 Casco", necklace: "📿 Collar", weapon: "⚔️ Arma", chest: "🛡️ Armadura", shield: "🛡️ Escudo", gloves: "🧤 Guantes", boots: "🥾 Botas", ring1: "💍 Anillo 1", ring2: "💍 Anillo 2" };
+                const iconos = { helmet: "🎩 Casco", necklace: "📿 Collar", weapon: "⚔️ Arma Izq", chest: "🛡️ Pechera", shield: "🛡️ Arma Der", gloves: "🧤 Guantes", boots: "🥾 Botas", ring1: "💍 Anillo 1" };
                 slotEl.innerText = iconos[slotActual];
                 slotEl.classList.remove('slot-active');
             }
@@ -375,43 +604,67 @@
             calcularStats();
         }
 
-        // Lógica de cálculo (Suma de estadísticas base + equipamiento)
         function calcularStats() {
-            let totalStats = { ...statsBase };
+            // Stats base
+            let stats = {
+                life: 100, mana: 50, speed: 100,
+                cold: 0, fire: 0, light: 0,
+                block: 0, evasion: 0, mf: 0,
+                ataque: 10, ataqueMagico: 0,
+                defensa: 0, defensaMagica: 0,
+                crit: 5, critPower: 150
+            };
 
-            // Aquí sumaremos los modificadores de cada ítem equipado más adelante
-            // Por ahora, simulamos modificadores estáticos según el tipo para ver el cambio
+            // 1. Modificadores por Equipamiento
             Object.keys(equipado).forEach(slot => {
                 const item = equipado[slot];
                 if (item) {
-                    if (slot === 'weapon') totalStats.ataque += 15;
-                    if (slot === 'chest') totalStats.defensa += 20;
-                    if (slot === 'helmet') totalStats.life += 15;
-                    if (slot === 'boots') totalStats.speed += 10;
+                    if (slot === 'weapon') { stats.ataque += 35; stats.crit += 10; }
+                    if (slot === 'shield') { stats.defensa += 25; stats.block += 15; }
+                    if (slot === 'chest') { stats.defensa += 50; stats.life += 40; }
+                    if (slot === 'helmet') { stats.defensa += 20; stats.mana += 30; }
+                    if (slot === 'boots') { stats.speed += 20; stats.evasion += 10; }
+                    if (slot === 'gloves') { stats.ataque += 10; stats.speed += 5; }
+                    if (slot === 'necklace') { stats.ataqueMagico += 25; }
+                    if (slot === 'ring1') { stats.mf += 15; }
                 }
             });
 
-            // Actualizar interfaz
-            document.getElementById('val-life').innerText = totalStats.life;
-            document.getElementById('val-mana').innerText = totalStats.mana;
-            document.getElementById('val-defensa').innerText = totalStats.defensa;
-            document.getElementById('val-ataque').innerText = totalStats.ataque;
-            document.getElementById('val-ataqueMagico').innerText = totalStats.ataqueMagico;
-            document.getElementById('val-speed').innerText = totalStats.speed + "%";
-        }
+            // 2. Modificadores por Habilidades del Árbol (Ejemplo de simulación interactiva)
+            currentTree.forEach(skill => {
+                if (skill.current > 0) {
+                    // Cada punto asignado suma beneficios según el tipo de habilidad
+                    if (skill.name.includes("Ataque") || skill.name.includes("Tajo")) {
+                        stats.ataque += skill.current * 5;
+                    } else if (skill.name.includes("Escudo") || skill.name.includes("Muro")) {
+                        stats.defensa += skill.current * 8;
+                        stats.block += skill.current * 2;
+                    } else if (skill.name.includes("Foco") || skill.name.includes("Orbe")) {
+                        stats.ataqueMagico += skill.current * 7;
+                        stats.mana += skill.current * 10;
+                    } else if (skill.name.includes("Sanación") || skill.name.includes("Corazón")) {
+                        stats.life += skill.current * 15;
+                    }
+                }
+            });
 
-        // Cambia el diseño del árbol según la clase elegida
-        function cambiarClase() {
-            const clase = document.getElementById('class-select').value;
-            const tree = document.getElementById('skill-tree');
-            
-            if (clase === 'ciruja') {
-                tree.innerHTML = `<div><strong>Árbol Ciruja:</strong> [Habilidad 1] -> [Habilidad 2]</div>`;
-            } else if (clase === 'mago') {
-                tree.innerHTML = `<div><strong>Árbol Mago:</strong> [Hechizo Fuego] | [Hechizo Hielo]</div>`;
-            } else if (clase === 'mutante') {
-                tree.innerHTML = `<div><strong>Árbol Mutante:</strong> [Transformación] -> [Poder]</div>`;
-            }
+            // Actualizar interfaz columna central (Stats rápidos)
+            document.getElementById('q-dmg').innerText = stats.ataque;
+            document.getElementById('q-crit').innerText = stats.crit + "%";
+            document.getElementById('q-crit-power').innerText = stats.critPower + "%";
+            document.getElementById('q-def').innerText = stats.defensa;
+            document.getElementById('q-mdef').innerText = stats.defensaMagica;
+
+            // Actualizar interfaz columna derecha (Stats detallados)
+            document.getElementById('d-life').innerText = stats.life;
+            document.getElementById('d-mana').innerText = stats.mana;
+            document.getElementById('d-speed').innerText = stats.speed + "%";
+            document.getElementById('d-cold').innerText = stats.cold + "%";
+            document.getElementById('d-fire').innerText = stats.fire + "%";
+            document.getElementById('d-light').innerText = stats.light + "%";
+            document.getElementById('d-block').innerText = stats.block + "%";
+            document.getElementById('d-evasion').innerText = stats.evasion + "%";
+            document.getElementById('d-mf').innerText = stats.mf + "%";
         }
 
         inicializar();
