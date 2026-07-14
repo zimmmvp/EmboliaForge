@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Embolia Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <header>
+        <h1>⚔️ Embolia Build Planner 🛡️</h1>
+    </header>
+
+    <main class="planner-layout">
+        <!-- Columna 1: Habilidades -->
+        <section class="panel" id="panel-skills">
+            <h2>Habilidades</h2>
+            <select id="class-select" onchange="cambiarClase()"></select>
+            <div id="skills-container"></div>
+        </section>
+
+        <!-- Columna 2: Equipamiento -->
+        <section class="panel" id="panel-gear">
+            <h2>Equipamiento</h2>
+            <div id="gear-slots"></div>
+        </section>
+
+        <!-- Columna 3: Estadísticas -->
+        <section class="panel" id="panel-stats">
+            <h2>Stats Totales</h2>
+            <div id="stats-container"></div>
+        </section>
+    </main>
+
+    <!-- Modal buscador -->
+    <div id="modal-overlay" class="hidden">
+        <div id="modal">
+            <input type="text" id="buscador" placeholder="Buscar ítem...">
+            <div id="modal-list"></div>
+            <button onclick="cerrarSelector()">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
