@@ -33,7 +33,7 @@
             display: grid;
             grid-template-columns: 310px 1fr 300px;
             gap: 12px;
-            max-width: 1100px; /* Tamaño contenido y compacto */
+            max-width: 1200px; /* Un poquito más ancho para dar espacio al nuevo inventario */
             width: 100%;
             margin: 0 auto;
             flex-grow: 1;
@@ -156,7 +156,7 @@
             color: #00e676;
         }
 
-        /* --- COLUMNA CENTRAL: EQUIPAMIENTO COMPACTO --- */
+        /* --- COLUMNA CENTRAL: EQUIPAMIENTO AGRANDADO Y PROPORCIONAL --- */
         .equipment-container {
             display: flex;
             flex-direction: column;
@@ -166,7 +166,7 @@
         }
         .equipment-layout-wrapper {
             display: flex;
-            gap: 12px;
+            gap: 24px; /* Más espacio entre columnas */
             align-items: center;
             justify-content: center;
             margin: auto 0;
@@ -174,46 +174,51 @@
         .equip-column {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px; /* Más espacio vertical entre ranuras */
         }
         .char-silhouette {
-            width: 120px;
-            height: 220px;
-            border: 1px dashed #29292e;
+            width: 170px; /* Más ancho */
+            height: 300px; /* Más alto para ocupar espacio vertical */
+            border: 1px dashed #3a3a42;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #41414c;
-            font-size: 11px;
+            color: #7c7c8a;
+            font-size: 13px;
+            font-weight: bold;
             background-color: #16161a;
-            border-radius: 6px;
+            border-radius: 8px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
         }
         .slot {
-            width: 56px;
-            height: 56px;
+            width: 76px; /* Más grande */
+            height: 76px; /* Más grande */
             background-color: #1a1a1e;
             border: 1px dashed #3a3a42;
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 8px;
-            color: #7c7c8a;
+            font-size: 11px; /* Letra más legible */
+            color: #a8a8b3;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
-            padding: 2px;
+            padding: 4px;
             box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
         .slot:hover {
             border-color: #00e676;
             background-color: #202024;
+            color: #fff;
         }
         .slot-active {
-            border: 1px solid #ffca28;
+            border: 1.5px solid #ffca28;
             background-color: #202024;
             color: #fff;
+            font-weight: 600;
         }
         .quick-stats {
             width: 100%;
@@ -654,7 +659,7 @@
             };
 
             Object.keys(equipado).forEach(slot => {
-                const item = équipé = equipado[slot];
+                const item = equipado[slot];
                 if (item) {
                     if (slot === 'weapon') { stats.ataque += 35; stats.crit += 10; }
                     if (slot === 'shield') { stats.defensa += 25; stats.block += 15; }
