@@ -14,7 +14,8 @@
         .slot { width: 90px; height: 90px; border: 1px dashed #3a3a42; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 10px; text-align: center; background: #16161a; border-radius: 6px; }
         .stat-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #202024; font-size: 12px; }
         .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #121214; padding: 20px; border: 1px solid #00e676; z-index: 1000; width: 350px; border-radius: 8px; }
-        .item-btn { display: block; width: 100%; padding: 10px; margin-bottom: 5px; cursor: pointer; background: #1a1a1e; color: #fff; border: 1px solid #29292e; }
+        .item-container { border: 1px solid #333; padding: 8px; margin-bottom: 5px; border-radius: 4px; }
+        .item-btn { width: 100%; padding: 8px; cursor: pointer; background: #29292e; color: #fff; border: 1px solid #00e676; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -47,13 +48,13 @@
     </div>
 
     <div class="modal" id="modal">
-        <input type="text" id="buscador" oninput="filtrarItems()" placeholder="Buscar ítem...">
+        <input type="text" id="buscador" oninput="filtrarItems()" placeholder="Buscar ítem..." style="width:100%; padding:8px;">
         <div id="modal-list" class="scroll-y" style="max-height: 300px;"></div>
-        <button onclick="cerrarSelector()">Cerrar</button>
+        <button onclick="cerrarSelector()" style="margin-top:10px;">Cerrar</button>
     </div>
 
     <script>
-        let itemsDatabase = [], slotActual = null, equipado = {}, stats = {ataque: 10, vida: 100};
+        let itemsDatabase = [], slotActual = null, equipado = {};
         const skillTrees = {
             ninja: Array.from({length:10}, (_, i) => ({row: i+1, name: "Ninja Skill "+(i+1)})),
             guerrero: Array.from({length:10}, (_, i) => ({row: i+1, name: "Tajo "+(i+1)})),
@@ -61,10 +62,12 @@
         };
 
         async function inicializar() {
-            const res = await fetch('item.txt');
-            const text = await res.text();
-            text.split('\n').forEach(linea => { if(linea.includes('item_name_')) itemsDatabase.push({nombre: linea.split('=>')[1].trim()}); });
-            cambiarClase();
+            try {
+                const res = await fetch('item.txt');
+                const text = await res.text();
+                text.split('\n').forEach(linea => { if(linea.includes('item_name_')) itemsDatabase.push({nombre: linea.split('=>')[1].trim()}); });
+                cambiarClase();
+            } catch(e) { console.log("Cargando base de datos..."); }
         }
 
         function cambiarClase() {
@@ -75,28 +78,47 @@
             });
         }
 
-        function abrirSelector(slot) { slotActual = slot; document.getElementById('modal').style.display = 'block'; filtrarItems(); }
+        function abrirSelector(slot) { 
+            slotActual = slot; 
+            document.getElementById('modal').style.display = 'block'; 
+            filtrarItems(); 
+        }
+
         function filtrarItems() {
             const query = document.getElementById('buscador').value.toLowerCase();
             const list = document.getElementById('modal-list');
             list.innerHTML = `<button class="item-btn" onclick="equiparItem(null)">❌ Desequipar</button>`;
             itemsDatabase.filter(i => i.nombre.toLowerCase().includes(query)).forEach(item => {
-                list.innerHTML += `<button class="item-btn" onclick="equiparItem('${item.nombre}')">${item.nombre}</button>`;
+                let div = document.createElement('div');
+                div.className = "item-container";
+                div.innerHTML = `<strong>${item.nombre}</strong><br>
+                    <input type="number" id="atk-${item.nombre}" placeholder="Ataque" style="width:40%">
+                    <input type="number" id="vida-${item.nombre}" placeholder="Vida" style="width:40%">
+                    <button class="item-btn" onclick="equiparItem('${item.nombre}')">Equipar</button>`;
+                list.appendChild(div);
             });
         }
 
         function equiparItem(nombre) {
-            equipado[slotActual] = nombre;
+            if (!nombre) {
+                equipado[slotActual] = null;
+            } else {
+                let atk = parseInt(document.getElementById('atk-'+nombre).value) || 0;
+                let vida = parseInt(document.getElementById('vida-'+nombre).value) || 0;
+                equipado[slotActual] = { nombre, atk, vida };
+            }
             document.getElementById('slot-'+slotActual).innerText = nombre || "Slot";
             calcularStats();
             cerrarSelector();
         }
 
         function calcularStats() {
-            stats.ataque = 10; stats.vida = 100;
-            Object.values(equipado).forEach(item => { if(item) { stats.ataque += 20; stats.vida += 50; } });
-            document.getElementById('val-ataque').innerText = stats.ataque;
-            document.getElementById('val-vida').innerText = stats.vida;
+            let totalAtk = 10, totalVida = 100;
+            Object.values(equipado).forEach(item => { 
+                if(item) { totalAtk += item.atk; totalVida += item.vida; } 
+            });
+            document.getElementById('val-ataque').innerText = totalAtk;
+            document.getElementById('val-vida').innerText = totalVida;
         }
 
         function cerrarSelector() { document.getElementById('modal').style.display = 'none'; }
