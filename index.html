@@ -3,256 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battle For Embolia - Items & Stats</title>
+    <title>Embolia Planner - Simulador de Builds</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0c0c0e;
             color: #e1e1e6;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
         }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #00e676;
+        .header {
             text-align: center;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            margin-bottom: 30px;
-        }
-        #buscador {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            border: 1px solid #29292e;
-            background-color: #121214;
-            color: #fff;
-            box-sizing: border-box;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        #buscador:focus {
-            border-color: #00e676;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background-color: #121214;
-            border: 1px solid #29292e;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: #41414c;
-        }
-        .card-header h3 {
-            margin: 0 0 5px 0;
-            color: #ffca28;
-            font-size: 18px;
-        }
-        .item-id {
-            color: #7c7c8a;
-            font-size: 12px;
+            padding: 10px;
+            border-bottom: 1px solid #29292e;
             margin-bottom: 15px;
         }
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            background-color: #29292e;
+        .header h1 {
+            margin: 0;
+            color: #00e676;
+            font-size: 24px;
         }
-        /* Colores por tipo de ítem */
-        .badge-arma { background-color: #e53935; color: #fff; }
-        .badge-armadura { background-color: #1e88e5; color: #fff; }
-        .badge-pico { background-color: #ffb300; color: #000; }
-        .badge-otros { background-color: #757575; color: #fff; }
+        
+        /* Contenedor principal de tres columnas estilo Maxroll */
+        .planner-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 15px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
 
-        .stats-container {
-            border-top: 1px solid #29292e;
-            padding-top: 12px;
-            margin-top: auto;
+        /* Paneles */
+        .panel {
+            background-color: #121214;
+            border: 1px solid #29292e;
+            border-radius: 8px;
+            padding: 15px;
+            box-sizing: border-box;
         }
-        .stat-line {
-            font-size: 13px;
-            margin: 6px 0;
+        .panel h2 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #fff;
+            border-bottom: 1px solid #29292e;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 1. SECCIÓN EQUIPAMIENTO (Izquierda) */
+        .equipment-grid {
+            display: grid;
+            grid-template-areas: 
+                "head head"
+                "neck shoulders"
+                "chest shield"
+                "gloves boots"
+                "ring1 ring2";
+            gap: 10px;
+            justify-content: center;
+        }
+        .slot {
+            width: 80px;
+            height: 80px;
+            background-color: #1a1a1e;
+            border: 2px dashed #3a3a42;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #7c7c8a;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
         }
-        .stat-name {
+        .slot:hover {
+            border-color: #00e676;
+            background-color: #202024;
+        }
+        .slot-active {
+            border: 2px solid #ffca28;
+            background-color: #202024;
+            color: #fff;
+        }
+        /* Asignar áreas */
+        #slot-helmet { grid-area: head; width: 100%; height: 80px; }
+        #slot-necklace { grid-area: neck; }
+        #slot-weapon { grid-area: shoulders; } /* Arma principal */
+        #slot-chest { grid-area: chest; }
+        #slot-shield { grid-area: shield; }
+        #slot-gloves { grid-area: gloves; }
+        #slot-boots { grid-area: boots; }
+        #slot-ring1 { grid-area: ring1; }
+        #slot-ring2 { grid-area: ring2; }
+
+        /* 2. SECCIÓN CENTRAL (Habilidades / Árbol) */
+        .class-selector {
+            margin-bottom: 15px;
+        }
+        .class-selector select {
+            width: 100%;
+            padding: 10px;
+            background-color: #202024;
+            color: white;
+            border: 1px solid #29292e;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .skill-tree-area {
+            background-color: #1a1a1e;
+            border: 1px solid #29292e;
+            border-radius: 6px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7c7c8a;
+        }
+
+        /* 3. SECCIÓN DERECHA (Estadísticas y Cálculos) */
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1a1a1e;
+            font-size: 13px;
+        }
+        .stat-val {
             color: #00e676;
-            font-weight: 600;
+            font-weight: bold;
         }
-        .stat-desc {
-            color: #a8a8b3;
-            font-size: 11px;
-            margin-left: 5px;
+
+        /* Modal para elegir ítems */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #121214;
+            border: 1px solid #00e676;
+            border-radius: 8px;
+            padding: 20px;
+            z-index: 1000;
+            width: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #29292e;
+            padding-bottom: 10px;
+        }
+        .modal-close {
+            cursor: pointer;
+            color: #ff3333;
+            font-weight: bold;
+        }
+        .modal-item-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1a1a1e;
+            color: white;
+            border: 1px solid #29292e;
+            margin-bottom: 8px;
+            text-align: left;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .modal-item-btn:hover {
+            border-color: #ffca28;
+            background-color: #202024;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>⚔️ Battle For Embolia Database 🛡️</h1>
-        <input type="text" id="buscador" placeholder="Buscar ítem por nombre, ID o tipo...">
-        <div id="items-container" class="grid">
-            <p>Procesando ítems y estadísticas...</p>
+
+    <div class="header">
+        <h1>🛠️ Embolia Planner 🛠️</h1>
+    </div>
+
+    <div class="planner-layout">
+        
+        <!-- COLUMNA 1: EQUIPAMIENTO -->
+        <div class="panel">
+            <h2>Equipamiento</h2>
+            <div class="equipment-grid">
+                <div class="slot" id="slot-helmet" onclick="abrirSelector('helmet')">🎩 Casco</div>
+                <div class="slot" id="slot-necklace" onclick="abrirSelector('necklace')">📿 Collar</div>
+                <div class="slot" id="slot-weapon" onclick="abrirSelector('weapon')">⚔️ Arma</div>
+                <div class="slot" id="slot-chest" onclick="abrirSelector('chest')">🛡️ Armadura</div>
+                <div class="slot" id="slot-shield" onclick="abrirSelector('shield')">🛡️ Escudo</div>
+                <div class="slot" id="slot-gloves" onclick="abrirSelector('gloves')">🧤 Guantes</div>
+                <div class="slot" id="slot-boots" onclick="abrirSelector('boots')">🥾 Botas</div>
+                <div class="slot" id="slot-ring1" onclick="abrirSelector('ring1')">💍 Anillo 1</div>
+                <div class="slot" id="slot-ring2" onclick="abrirSelector('ring2')">💍 Anillo 2</div>
+            </div>
+        </div>
+
+        <!-- COLUMNA 2: ÁRBOL DE HABILIDADES -->
+        <div class="panel">
+            <h2>Árbol de Habilidades</h2>
+            <div class="class-selector">
+                <label for="class-select">Selecciona tu Clase:</label>
+                <select id="class-select" onchange="cambiarClase()">
+                    <option value="ciruja">Ciruja</option>
+                    <option value="mago">Mago</option>
+                    <option value="mutante">Mutante</option>
+                </select>
+            </div>
+            <!-- El árbol cambiará dinámicamente aquí -->
+            <div id="skill-tree" class="skill-tree-area">
+                Selecciona una clase para ver sus habilidades
+            </div>
+        </div>
+
+        <!-- COLUMNA 3: ESTADÍSTICAS (CALCULATIONS) -->
+        <div class="panel">
+            <h2>Estadísticas Totales</h2>
+            <div id="stats-summary">
+                <div class="stat-row"><span>Vida Máxima:</span> <span class="stat-val" id="val-life">100</span></div>
+                <div class="stat-row"><span>Maná Máximo:</span> <span class="stat-val" id="val-mana">50</span></div>
+                <div class="stat-row"><span>Defensa Física:</span> <span class="stat-val" id="val-defensa">0</span></div>
+                <div class="stat-row"><span>Ataque Físico:</span> <span class="stat-val" id="val-ataque">10</span></div>
+                <div class="stat-row"><span>Ataque Mágico:</span> <span class="stat-val" id="val-ataqueMagico">0</span></div>
+                <div class="stat-row"><span>Velocidad de Movimiento:</span> <span class="stat-val" id="val-speed">100%</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL DE SELECCIÓN DE ITEMS -->
+    <div class="overlay" id="overlay" onclick="cerrarSelector()"></div>
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h3 id="modal-title">Seleccionar Item</h3>
+            <span class="modal-close" onclick="cerrarSelector()">X</span>
+        </div>
+        <div id="modal-list">
+            <!-- Los ítems correspondientes a la ranura se cargarán acá -->
         </div>
     </div>
 
     <script>
-        // Diccionarios globales para guardar lo que leamos de los archivos
+        let itemsDatabase = [];
         let statsDatabase = {};
-        let itemsList = [];
+        let slotActual = null;
 
-        async function cargarDatos() {
+        // Equipamiento actualmente equipado
+        let equipado = {
+            helmet: null,
+            necklace: null,
+            weapon: null,
+            chest: null,
+            shield: null,
+            gloves: null,
+            boots: null,
+            ring1: null,
+            ring2: null
+        };
+
+        // Stats base iniciales del personaje
+        const statsBase = {
+            life: 100,
+            mana: 50,
+            defensa: 0,
+            ataque: 10,
+            ataqueMagico: 0,
+            speed: 100
+        };
+
+        async function inicializar() {
             try {
-                // 1. Leer y procesar stats.txt
-                const resStats = await fetch('stats.txt');
-                const textStats = await resStats.text();
-                
-                textStats.split('\n').forEach(linea => {
-                    if (linea.includes('=>')) {
-                        const [llave, valor] = linea.split('=>');
-                        const keyClean = llave.replace('stats/', '').trim();
-                        
-                        // Separamos si es el nombre del stat o su descripción (_desc)
-                        if (keyClean.endsWith('_desc')) {
-                            const baseKey = keyClean.replace('_desc', '');
-                            if (!statsDatabase[baseKey]) statsDatabase[baseKey] = {};
-                            statsDatabase[baseKey].desc = valor.trim();
-                        } else {
-                            if (!statsDatabase[keyClean]) statsDatabase[keyClean] = {};
-                            statsDatabase[keyClean].nombre = valor.trim();
-                        }
-                    }
-                });
-
-                // 2. Leer y procesar item.txt
+                // Cargamos items
                 const resItems = await fetch('item.txt');
                 const textItems = await resItems.text();
-                
                 textItems.split('\n').forEach(linea => {
-                    if (linea.includes('=>')) {
-                        const [llave, valor] = linea.split('=>');
+                    if (linea.includes('=>') && linea.includes('item_name_')) {
+                        const id = linea.split('item_name_')[1].split('=>')[0].trim();
+                        const nombre = linea.split('=>')[1].trim();
                         
-                        if (llave.includes('item_name_')) {
-                            const id = llave.split('item_name_')[1].trim();
-                            const nombre = valor.trim();
-                            
-                            // Determinamos el tipo de ítem de manera inteligente para asignarle stats lógicos
-                            let tipo = "Otros";
-                            let statsAsignados = [];
+                        // Detectar tipo de ítem según el nombre para filtrarlo en la ranura correcta
+                        let tipo = 'otros';
+                        if (nombre.toLowerCase().includes('casco') || nombre.toLowerCase().includes('corona')) tipo = 'helmet';
+                        else if (nombre.toLowerCase().includes('collar')) tipo = 'necklace';
+                        else if (nombre.toLowerCase().includes('espada') || nombre.toLowerCase().includes('báculo') || nombre.toLowerCase().includes('palo') || nombre.toLowerCase().includes('daga') || nombre.toLowerCase().includes('maza')) tipo = 'weapon';
+                        else if (nombre.toLowerCase().includes('armadura') || nombre.toLowerCase().includes('túnica')) tipo = 'chest';
+                        else if (nombre.toLowerCase().includes('escudo')) tipo = 'shield';
+                        else if (nombre.toLowerCase().includes('guantes')) tipo = 'gloves';
+                        else if (nombre.toLowerCase().includes('botas')) tipo = 'boots';
+                        else if (nombre.toLowerCase().includes('anillo')) tipo = 'ring';
 
-                            const nombreMinusculo = nombre.toLowerCase();
-
-                            if (nombreMinusculo.includes('espada') || nombreMinusculo.includes('daga') || nombreMinusculo.includes('báculo') || nombreMinusculo.includes('palo') || nombreMinusculo.includes('maza') || nombreMinusculo.includes('maso')) {
-                                tipo = "Arma";
-                                statsAsignados = ['ataque', 'attackSpeed', 'critico'];
-                            } else if (nombreMinusculo.includes('armadura') || nombreMinusculo.includes('casco') || nombreMinusculo.includes('botas') || nombreMinusculo.includes('guantes') || nombreMinusculo.includes('túnica') || nombreMinusculo.includes('corona')) {
-                                tipo = "Armadura";
-                                statsAsignados = ['defensa', 'life', 'regeneracionVida'];
-                            } else if (nombreMinusculo.includes('pico')) {
-                                tipo = "Pico";
-                                statsAsignados = ['mineSpeed', 'mineQuantity', 'mineRarity'];
-                            } else if (nombreMinusculo.includes('anillo') || nombreMinusculo.includes('collar')) {
-                                tipo = "Accesorio";
-                                statsAsignados = ['magicFind', 'manaMaxima', 'regeneracionMana'];
-                            }
-
-                            itemsList.push({
-                                id: id,
-                                nombre: nombre,
-                                tipo: tipo,
-                                stats: statsAsignados
-                            });
-                        }
+                        itemsDatabase.push({ id, nombre, tipo });
                     }
                 });
-
-                mostrarItems(itemsList);
-
-                // Buscador funcional en tiempo real
-                document.getElementById('buscador').addEventListener('input', (e) => {
-                    const busqueda = e.target.value.toLowerCase();
-                    const filtrados = itemsList.filter(item => 
-                        item.nombre.toLowerCase().includes(busqueda) || 
-                        item.id.toString().includes(busqueda) ||
-                        item.tipo.toLowerCase().includes(busqueda)
-                    );
-                    mostrarItems(filtrados);
-                });
-
-            } catch (error) {
-                console.error("Error cargando base de datos:", error);
-                document.getElementById('items-container').innerHTML = "<p>Error al cargar los datos.</p>";
-            }
-        }
-
-        function mostrarItems(lista) {
-            const container = document.getElementById('items-container');
-            container.innerHTML = '';
-            
-            if (lista.length === 0) {
-                container.innerHTML = '<p>No se encontraron ítems.</p>';
-                return;
-            }
-
-            lista.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
                 
-                // Generamos el HTML para los stats asociados a esta tarjeta
-                let statsHtml = '';
-                if (item.stats && item.stats.length > 0) {
-                    statsHtml = `<div class="stats-container">`;
-                    item.stats.forEach(statKey => {
-                        const statInfo = statsDatabase[statKey];
-                        if (statInfo) {
-                            const nombreStat = statInfo.nombre || statKey;
-                            const descStat = statInfo.desc || "Sin descripción.";
-                            statsHtml += `
-                                <div class="stat-line">
-                                    <span class="stat-name">✦ ${nombreStat}</span>
-                                    <span class="stat-desc">${descStat}</span>
-                                </div>
-                            `;
-                        }
-                    });
-                    statsHtml += `</div>`;
-                }
-
-                // Determinamos la clase CSS del badge de tipo
-                const badgeClass = `badge badge-${item.tipo.toLowerCase().replace('accesorio', 'otros')}`;
-
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="${badgeClass}">${item.tipo}</span>
-                        <h3>${item.nombre}</h3>
-                        <div class="item-id">ID de Item: #${item.id}</div>
-                    </div>
-                    ${statsHtml}
-                `;
-                container.appendChild(card);
-            });
+                cambiarClase();
+                calcularStats();
+            } catch (e) {
+                console.error("Error al inicializar el planificador:", e);
+            }
         }
 
-        cargarDatos();
+        // Abre la lista de ítems para la ranura seleccionada
+        function abrirSelector(slot) {
+            slotActual = slot;
+            document.getElementById('modal-title').innerText = `Equipar en ${slot.toUpperCase()}`;
+            const listContainer = document.getElementById('modal-list');
+            listContainer.innerHTML = '';
+
+            // Filtrar ítems de la DB que sirvan para este slot
+            let tipoFiltro = slot;
+            if (slot === 'ring1' || slot === 'ring2') tipoFiltro = 'ring';
+
+            const itemsFiltrados = itemsDatabase.filter(i => i.tipo === tipoFiltro);
+
+            // Opción de desequipar
+            const desequiparBtn = document.createElement('button');
+            desequiparBtn.className = 'modal-item-btn';
+            desequiparBtn.style.color = '#ff3333';
+            desequiparBtn.innerText = '❌ Desequipar slot';
+            desequiparBtn.onclick = () => equiparItem(null);
+            listContainer.appendChild(desequiparBtn);
+
+            itemsFiltrados.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'modal-item-btn';
+                btn.innerText = item.nombre;
+                btn.onclick = () => equiparItem(item);
+                listContainer.appendChild(btn);
+            });
+
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function cerrarSelector() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function equiparItem(item) {
+            equipado[slotActual] = item;
+            const slotEl = document.getElementById(`slot-${slotActual}`);
+            
+            if (item) {
+                slotEl.innerText = item.nombre;
+                slotEl.classList.add('slot-active');
+            } else {
+                // Resetear texto por defecto
+                const iconos = { helmet: "🎩 Casco", necklace: "📿 Collar", weapon: "⚔️ Arma", chest: "🛡️ Armadura", shield: "🛡️ Escudo", gloves: "🧤 Guantes", boots: "🥾 Botas", ring1: "💍 Anillo 1", ring2: "💍 Anillo 2" };
+                slotEl.innerText = iconos[slotActual];
+                slotEl.classList.remove('slot-active');
+            }
+            
+            cerrarSelector();
+            calcularStats();
+        }
+
+        // Lógica de cálculo (Suma de estadísticas base + equipamiento)
+        function calcularStats() {
+            let totalStats = { ...statsBase };
+
+            // Aquí sumaremos los modificadores de cada ítem equipado más adelante
+            // Por ahora, simulamos modificadores estáticos según el tipo para ver el cambio
+            Object.keys(equipado).forEach(slot => {
+                const item = equipado[slot];
+                if (item) {
+                    if (slot === 'weapon') totalStats.ataque += 15;
+                    if (slot === 'chest') totalStats.defensa += 20;
+                    if (slot === 'helmet') totalStats.life += 15;
+                    if (slot === 'boots') totalStats.speed += 10;
+                }
+            });
+
+            // Actualizar interfaz
+            document.getElementById('val-life').innerText = totalStats.life;
+            document.getElementById('val-mana').innerText = totalStats.mana;
+            document.getElementById('val-defensa').innerText = totalStats.defensa;
+            document.getElementById('val-ataque').innerText = totalStats.ataque;
+            document.getElementById('val-ataqueMagico').innerText = totalStats.ataqueMagico;
+            document.getElementById('val-speed').innerText = totalStats.speed + "%";
+        }
+
+        // Cambia el diseño del árbol según la clase elegida
+        function cambiarClase() {
+            const clase = document.getElementById('class-select').value;
+            const tree = document.getElementById('skill-tree');
+            
+            if (clase === 'ciruja') {
+                tree.innerHTML = `<div><strong>Árbol Ciruja:</strong> [Habilidad 1] -> [Habilidad 2]</div>`;
+            } else if (clase === 'mago') {
+                tree.innerHTML = `<div><strong>Árbol Mago:</strong> [Hechizo Fuego] | [Hechizo Hielo]</div>`;
+            } else if (clase === 'mutante') {
+                tree.innerHTML = `<div><strong>Árbol Mutante:</strong> [Transformación] -> [Poder]</div>`;
+            }
+        }
+
+        inicializar();
     </script>
 </body>
 </html>
